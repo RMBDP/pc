@@ -1,0 +1,198 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Cette première partie du programme permet d'importer le fichier avec les différentes positions du volant de badminton au cours du temps. C'est comme dans la première partie du TP : vous avez exporté dans régressi les différentes positions du ballon de basket au cours du temps.\n",
+    "\n",
+    "Cette partie de programmation n'est pas à connaitre."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "[0.04, 0.08, 0.12, 0.16, 0.2, 0.24, 0.28, 0.32, 0.36, 0.4, 0.44, 0.48, 0.52, 0.56, 0.6, 0.64, 0.68, 0.72, 0.76, 0.8, 0.84, 0.88, 0.92, 0.96, 1.0, 1.04, 1.08, 1.12, 1.16, 1.2, 1.24, 1.28, 1.32, 1.36, 1.4, 1.44, 1.48]\n",
+      "[0.362, 0.649, 0.92, 1.147, 1.373, 1.554, 1.72, 1.901, 2.052, 2.203, 2.338, 2.489, 2.61, 2.731, 2.836, 2.972, 3.078, 3.198, 3.319, 3.425, 3.53, 3.636, 3.726, 3.802, 3.892, 3.968, 4.058, 4.149, 4.224, 4.3, 4.39, 4.45, 4.496, 4.586, 4.647, 4.722, 4.767]\n",
+      "[0.815, 1.478, 2.022, 2.459, 2.851, 3.198, 3.5, 3.772, 3.998, 4.209, 4.405, 4.556, 4.707, 4.813, 4.903, 4.978, 5.039, 5.084, 5.114, 5.099, 5.099, 5.099, 5.084, 5.024, 4.963, 4.903, 4.813, 4.707, 4.601, 4.481, 4.345, 4.194, 4.028, 3.907, 3.711, 3.515, 3.304]\n"
+     ]
+    }
+   ],
+   "source": [
+    "import csv\n",
+    "def charge_fichier_csv(fichier, delimiter=\";\",N=0):\n",
+    "    \"\"\"\n",
+    "    Charge un fichier csv et le renvoie sous forme de tableau\n",
+    "\n",
+    "    :param: nom de fichier, délimiteur de cellules (par défaut \";\"),\n",
+    "    nombre de lignes d'en-tête (en comptant les lignes vides)\n",
+    "    :returns: tableau des données\n",
+    "    \"\"\"\n",
+    "\n",
+    "    with open(fichier, 'r', encoding='utf-8') as f :\n",
+    "        rfichier = csv.reader(f, delimiter=delimiter)\n",
+    "        tableau=[]\n",
+    "        index_row=0\n",
+    "        for row in rfichier:\n",
+    "            if index_row < N:\n",
+    "                index_row = index_row+1\n",
+    "            else :\n",
+    "                for i in range (len(row)):\n",
+    "                    if len(tableau) <= i:\n",
+    "                        X = []\n",
+    "                        tableau.append(X)\n",
+    "                    try:\n",
+    "                        tableau[i].append(float(row[i].replace(\",\",'.')))\n",
+    "                    except ValueError:\n",
+    "                        print('erreur:contenu de cellule non numérique')\n",
+    "                        continue\n",
+    "\n",
+    "        return (tableau)\n",
+    "    \n",
+    "tableau = charge_fichier_csv('pointage.csv',delimiter=\";\",N=2)\n",
+    "t=tableau[0]\n",
+    "print(t)\n",
+    "x=tableau[1]\n",
+    "print(x)\n",
+    "y=tableau[2]\n",
+    "print(y)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Au dessus apparait 3 listes de valeurs (chacune entre crochets).\n",
+    "La première liste correspond aux valeurs de t (toutes les 0,04s)\n",
+    "\n",
+    "La deuxième liste, les valeurs des abscisses x pour le volant de badminton\n",
+    "\n",
+    "Puis la troisième ligne, les valeurs des ordonnées y pour le volant de badminton\n",
+    "\n",
+    "Par exemple à t=0,04 s    x=0,362   et   y=0,815"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Nous allons maintenant créer des listes :\n",
+    "\n",
+    "La liste vx va contenir les coordonnées de v sur l'axe des abscisses.\n",
+    "La liste vy va contenir les coordonnées de v sur l'axe des ordonnées.\n",
+    "La liste v va contenir les valeurs de la vitesse.\n",
+    "\n",
+    "Travail à faire : compléter l'instruction vy.append (.........) afin de créer la liste des coordonnées de v sur l'axe des ordonnées.\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt\n",
+    "import math\n",
+    "\n",
+    "n=(len(t))\n",
+    "vx=[]\n",
+    "vy=[]\n",
+    "v=[]\n",
+    "\n",
+    "for i in range(0,n-1) :\n",
+    "\n",
+    "    vx.append((x[i+1]-x[i])/(t[i+1]-t[i]))\n",
+    "    vy.append(-A compléter-)\n",
+    "    v.append(math.sqrt(vx[i]*vx[i]+vy[i]*vy[i]))\n",
+    "\n",
+    "print(\"\\nla liste contenant les vitesses vx en m/s\")\n",
+    "print(vx)\n",
+    "print(\"\\nla liste contenant les vitesses vy en m/s\")\n",
+    "print(vy)\n",
+    "print(\"\\nla liste contenant les vitesses v en m/s\")\n",
+    "print(v)\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Maintenant, nous allons créer des listes permettant de calculer l'enérgie cinétique, l'énergie potentielle de pesanteur et l'énergie mécanique au cours du mouvement (donc au cours du temps).\n",
+    "Compléter là où cela est indiqué puis exécuter afin de vérifier votre travail et de pouvoir conclure."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# PARTIE 3 CALCUL DES ENERGIES\n",
+    "m = -A compléter-\n",
+    "g = -A compléter-\n",
+    "Ec=[]\n",
+    "Epp=[]\n",
+    "Em=[]\n",
+    "\n",
+    "for i in range(0,n-1) :\n",
+    "\n",
+    "    Ec.append(0.5*m*v[i]*v[i])\n",
+    "    Epp.append(m*g*y[i])\n",
+    "    Em.append(Ec[i]+Epp[i])\n",
+    "\n",
+    "print(\"\\nla liste contenant les énergies cinétiques en J\")\n",
+    "print(Ec)\n",
+    "print(\"\\nla liste contenant les énergies potentielles en J\")\n",
+    "print(Epp)\n",
+    "print(\"\\nla liste contenant les énergies mécaniques en J\")\n",
+    "print(Em)\n",
+    "\n",
+    "# PARTIE 4 GRAPHE DES ENERGIES\n",
+    "plt.title('Energie du volant')\n",
+    "plt.xlabel('Temps t (s)')\n",
+    "plt.ylabel('Energie (J)')\n",
+    "plt.plot(t[:-1], Ec, color = 'blue', label = 'Energie cinétique', marker = '+')\n",
+    "plt.plot(t[:-1], Epp, color = 'red', label = 'Energie potentielle de pesanteur', marker = '+')\n",
+    "plt.plot(t[:-1], Em, color = 'green', label = 'Energie mécanique', marker = '+')\n",
+    "plt.legend()\n",
+    "plt.savefig(\"énergies volant.png\")\n",
+    "plt.show()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
